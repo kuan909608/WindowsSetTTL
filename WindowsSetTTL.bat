@@ -6,6 +6,10 @@ cls
 :: Set the title of the console window
 title Set or Reset Windows Global IPv4 TTL
 
+:: Parameter default value
+set "resetTTL=N"
+set "changeTTL=N"
+
 :: ===== Permission Check and Prompt =====
 :: Check if the script is running with administrator privileges
 net session >nul 2>&1
@@ -34,9 +38,16 @@ echo.
 :: ===== If TTL ≠ 128, Ask Whether to Restore =====
 :: If the current TTL is not 128, prompt the user to restore it to 128
 if not "!currentTTL!"=="128" (
-    set /p resetTTL=Restore TTL to 128? ^(Y/N^) [N]:
+    choice /C YN /N /M "Restore TTL to 128 (Y/N)?"
     echo.
-    if "!resetTTL!"=="" set "resetTTL=N"
+    if "%errorlevel%"=="1" set "resetTTL=Y"
+    if "%errorlevel%"=="2" set "resetTTL=N"
+    if %errorlevel%==255 (
+        echo [x] Operation canceled by user.
+        echo.
+        pause
+        exit /b
+    )
 )
 
 :: If the user confirms to restore TTL
@@ -58,8 +69,17 @@ if /i "!resetTTL!"=="Y" (
 
 :: ===== Ask Whether to Set a New TTL =====
 :: Prompt the user to set a new TTL value
-set /p changeTTL=Do you want to set a new TTL value? ^(Y/N^) [N]: 
+choice /C YN /N /M "Do you want to set a new TTL value (Y/N)?"
 echo.
+if "%errorlevel%"=="1" set "changeTTL=Y"
+if "%errorlevel%"=="2" set "changeTTL=N"
+if %errorlevel%==255 (
+    echo [x] Operation canceled by user.
+    echo.
+    pause
+    exit /b
+)
+
 if /i not "!changeTTL!"=="Y" (
     echo [+] No changes made.
     echo.

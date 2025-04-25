@@ -1,0 +1,11 @@
+# Use CRLF for batch files (Windows standard line endings)
+*.bat text eol=crlf
+
+# Use CRLF for PowerShell scripts
+*.ps1 text eol=crlf
+
+# Use LF for Markdown files (cross-platform friendly)
+*.md text eol=lf
+
+# Enable automatic handling of line endings for other text files (based on user OS)
+* text=auto

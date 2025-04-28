@@ -1,4 +1,4 @@
-# WindowsSetTTL
+# Windows Set TTL
 
 > 🌐 This README is available in other languages:
 >

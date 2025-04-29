@@ -1,4 +1,4 @@
-# WindowsSetTTL
+# Windows Set TTL
 
 > 🌐 此說明文件也有英文版本：
 >
